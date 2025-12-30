@@ -1,0 +1,32 @@
+name: "The Watcher - Security Scan"
+
+on:
+  push:
+    branches: [ main, master, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  scan:
+    name: Security Scan (Trivy)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy vulnerability scanner (Repo scan)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs' # Scan du système de fichiers (code source)
+          format: 'json'
+          output: 'trivy-report.json' # Génération du rapport pour l'IA
+          severity: 'CRITICAL,HIGH' # Critères de blocage du cahier des charges
+          exit-code: '1' # Force l'échec du build si des failles sont trouvées
+
+      - name: Upload Scan Report
+        if: always() # On garde le rapport même si le scan échoue
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-report
+          path: trivy-report.json

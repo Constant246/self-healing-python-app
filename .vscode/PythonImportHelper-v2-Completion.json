@@ -1,0 +1,116 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template_string",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "def index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>\n            body { font-family: Arial, sans-serif; margin: 40px; }\n            .search-box { margin: 20px 0; }\n            input[type=\"text\"] { padding: 8px; width: 300px; }",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "search",
+        "kind": 2,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "def search():\n    query = request.args.get('query', '')\n    if not query:\n        return \"Please provide a search query\"\n    try:\n        # VULNÉRABILITÉ: Injection SQL directe (CWE-89)\n        conn = sqlite3.connect('products.db')\n        cursor = conn.cursor()\n        # Création de la table si elle n'existe pas\n        cursor.execute('''",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "kind": 2,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "def admin():\n    # VULNÉRABILITÉ: Endpoint admin sans authentification\n    api_info = {\n        \"api_key\": API_KEY,\n        \"db_password\": DB_PASSWORD,\n        \"database_url\": DATABASE_URL\n    }\n    return f\"Admin Panel - API Key: {API_KEY}, DB Password: {DB_PASSWORD}\"\n@app.route('/debug')\ndef debug():",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "debug",
+        "kind": 2,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "def debug():\n    # VULNÉRABILITÉ: Information disclosure\n    return render_template_string('''\n    <h1>Debug Information</h1>\n    <p>Environment variables:</p>\n    <pre>{{ env_vars }}</pre>\n    <p>Python version: {{ python_version }}</p>\n    <p>Flask version: {{ flask_version }}</p>\n    ''', env_vars=dict(os.environ), python_version=os.sys.version, flask_version=Flask.__version__)\nif __name__ == '__main__':",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "app = Flask(__name__)\n# Secrets codés en dur - VULNÉRABILITÉ\nAPI_KEY = \"sk-1234567890abcdef1234567890abcdef12345678\"\nDB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "API_KEY",
+        "kind": 5,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "API_KEY = \"sk-1234567890abcdef1234567890abcdef12345678\"\nDB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "DB_PASSWORD",
+        "kind": 5,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "DB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>",
+        "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "app.app",
+        "description": "app.app",
+        "peekOfCode": "DATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>\n            body { font-family: Arial, sans-serif; margin: 40px; }",
+        "detail": "app.app",
+        "documentation": {}
+    }
+]
