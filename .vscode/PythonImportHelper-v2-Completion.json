@@ -24,6 +24,30 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template_string",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "sqlite3",
         "kind": 6,
         "isExtraImport": true,
@@ -39,6 +63,67 @@
         "importPath": "os",
         "description": "os",
         "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "google.generativeai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "google.generativeai",
+        "description": "google.generativeai",
+        "detail": "google.generativeai",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
         "documentation": {}
     },
     {
@@ -111,6 +196,114 @@
         "description": "app.app",
         "peekOfCode": "DATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>\n            body { font-family: Arial, sans-serif; margin: 40px; }",
         "detail": "app.app",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "def index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>\n            body { font-family: Arial, sans-serif; margin: 40px; }\n            .search-box { margin: 20px 0; }\n            input[type=\"text\"] { padding: 8px; width: 300px; }",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "search",
+        "kind": 2,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "def search():\n    query = request.args.get('query', '')\n    if not query:\n        return \"Please provide a search query\"\n    try:\n        # VULNÉRABILITÉ: Injection SQL directe (CWE-89)\n        conn = sqlite3.connect('products.db')\n        cursor = conn.cursor()\n        # Création de la table si elle n'existe pas\n        cursor.execute('''",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "kind": 2,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "def admin():\n    # VULNÉRABILITÉ: Endpoint admin sans authentification\n    api_info = {\n        \"api_key\": API_KEY,\n        \"db_password\": DB_PASSWORD,\n        \"database_url\": DATABASE_URL\n    }\n    return f\"Admin Panel - API Key: {API_KEY}, DB Password: {DB_PASSWORD}\"\n@app.route('/debug')\ndef debug():",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "debug",
+        "kind": 2,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "def debug():\n    # VULNÉRABILITÉ: Information disclosure\n    return render_template_string('''\n    <h1>Debug Information</h1>\n    <p>Environment variables:</p>\n    <pre>{{ env_vars }}</pre>\n    <p>Python version: {{ python_version }}</p>\n    <p>Flask version: {{ flask_version }}</p>\n    ''', env_vars=dict(os.environ), python_version=os.sys.version, flask_version=Flask.__version__)\nif __name__ == '__main__':",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "app = Flask(__name__)\n# Secrets codés en dur - VULNÉRABILITÉ\nAPI_KEY = \"sk-1234567890abcdef1234567890abcdef12345678\"\nDB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "API_KEY",
+        "kind": 5,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "API_KEY = \"sk-1234567890abcdef1234567890abcdef12345678\"\nDB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "DB_PASSWORD",
+        "kind": 5,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "DB_PASSWORD = \"admin123!@#\"\nDATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "app_secure.app",
+        "description": "app_secure.app",
+        "peekOfCode": "DATABASE_URL = f\"sqlite:///products.db?password={DB_PASSWORD}\"\n@app.route('/')\ndef index():\n    return render_template_string('''\n    <!DOCTYPE html>\n    <html>\n    <head>\n        <title>Vulnerable App</title>\n        <style>\n            body { font-family: Arial, sans-serif; margin: 40px; }",
+        "detail": "app_secure.app",
+        "documentation": {}
+    },
+    {
+        "label": "AISecurityBrain",
+        "kind": 6,
+        "importPath": "ai_fixer",
+        "description": "ai_fixer",
+        "peekOfCode": "class AISecurityBrain:\n    def __init__(self):\n        self.root_path = Path(\".\")\n        self.app_path = Path(\"app\")\n        self.report_file = Path(\"trivy-report.json\")\n        self.secure_app_path = Path(\"app_secure\")\n    def apply_git_workflow(self, cve_id, file_path):\n        \"\"\"Module 4 : Automatisation de la remédiation via Git\"\"\"\n        branch_name = f\"fix/{cve_id.lower()}\"\n        try:",
+        "detail": "ai_fixer",
+        "documentation": {}
+    },
+    {
+        "label": "GEMINI_API_KEY",
+        "kind": 5,
+        "importPath": "ai_fixer",
+        "description": "ai_fixer",
+        "peekOfCode": "GEMINI_API_KEY = os.getenv(\"GEMINI_API_KEY\")\nif not GEMINI_API_KEY:\n    print(\"❌ Erreur : GEMINI_API_KEY non trouvée dans le fichier .env\")\n    exit(1)\n# Configuration de l'IA Gemini\n# --- Configuration de l'IA Gemini ---\ngenai.configure(api_key=GEMINI_API_KEY)\n# On cherche automatiquement un modèle \"flash\" disponible dans votre liste\navailable_models = [m.name for m in genai.list_models() if 'flash' in m.name]\nif not available_models:",
+        "detail": "ai_fixer",
+        "documentation": {}
+    },
+    {
+        "label": "available_models",
+        "kind": 5,
+        "importPath": "ai_fixer",
+        "description": "ai_fixer",
+        "peekOfCode": "available_models = [m.name for m in genai.list_models() if 'flash' in m.name]\nif not available_models:\n    # Si aucun flash n'est trouvé, on essaie un nom standard par défaut\n    SELECTED_MODEL = 'gemini-1.5-flash' \nelse:\n    # On prend le premier modèle \"flash\" de la liste (ex: gemini-2.5-flash...)\n    SELECTED_MODEL = available_models[0]\nprint(f\"🤖 Modèle sélectionné : {SELECTED_MODEL}\")\nmodel = genai.GenerativeModel(SELECTED_MODEL)\nclass AISecurityBrain:",
+        "detail": "ai_fixer",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "ai_fixer",
+        "description": "ai_fixer",
+        "peekOfCode": "model = genai.GenerativeModel(SELECTED_MODEL)\nclass AISecurityBrain:\n    def __init__(self):\n        self.root_path = Path(\".\")\n        self.app_path = Path(\"app\")\n        self.report_file = Path(\"trivy-report.json\")\n        self.secure_app_path = Path(\"app_secure\")\n    def apply_git_workflow(self, cve_id, file_path):\n        \"\"\"Module 4 : Automatisation de la remédiation via Git\"\"\"\n        branch_name = f\"fix/{cve_id.lower()}\"",
+        "detail": "ai_fixer",
         "documentation": {}
     }
 ]
